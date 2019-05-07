@@ -1,0 +1,265 @@
+{
+    "type": "object",
+    "properties": {
+        "serviceName": {
+            "required": true,
+            "type": "string"
+        },
+        "access_token": {
+            "type": "string"
+        },
+        "alt": {
+            "type": "string",
+            "enum": [
+                "json",
+                "media",
+                "proto"
+            ],
+            "default": "json"
+        },
+        "callback": {
+            "type": "string"
+        },
+        "fields": {
+            "type": "string"
+        },
+        "key": {
+            "type": "string"
+        },
+        "oauth_token": {
+            "type": "string"
+        },
+        "prettyPrint": {
+            "type": "boolean",
+            "default": true
+        },
+        "quotaUser": {
+            "type": "string"
+        },
+        "uploadType": {
+            "type": "string"
+        },
+        "upload_protocol": {
+            "type": "string"
+        },
+        "requestBody": {
+            "description": "Request message for the AllocateQuota method.",
+            "properties": {
+                "allocateOperation": {
+                    "description": "Operation that describes the quota allocation.",
+                    "properties": {
+                        "consumerId": {
+                            "description": "Identity of the consumer for whom this quota operation is being performed.\n\nThis can be in one of the following formats:\n  project:<project_id>,\n  project_number:<project_number>,\n  api_key:<api_key>.",
+                            "type": "string"
+                        },
+                        "labels": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "Labels describing the operation.",
+                            "type": "object"
+                        },
+                        "methodName": {
+                            "description": "Fully qualified name of the API method for which this quota operation is\nrequested. This name is used for matching quota rules or metric rules and\nbilling status rules defined in service configuration.\n\nThis field should not be set if any of the following is true:\n(1) the quota operation is performed on non-API resources.\n(2) quota_metrics is set because the caller is doing quota override.\n\nExample of an RPC method name:\n    google.example.library.v1.LibraryService.CreateShelf",
+                            "type": "string"
+                        },
+                        "operationId": {
+                            "description": "Identity of the operation. This is expected to be unique within the scope\nof the service that generated the operation, and guarantees idempotency in\ncase of retries.\n\nUUID version 4 is recommended, though not required. In scenarios where an\noperation is computed from existing information and an idempotent id is\ndesirable for deduplication purpose, UUID version 5 is recommended. See\nRFC 4122 for details.",
+                            "type": "string"
+                        },
+                        "quotaMetrics": {
+                            "description": "Represents information about this operation. Each MetricValueSet\ncorresponds to a metric defined in the service configuration.\nThe data type used in the MetricValueSet must agree with\nthe data type specified in the metric definition.\n\nWithin a single operation, it is not allowed to have more than one\nMetricValue instances that have the same metric names and identical\nlabel value combinations. If a request has such duplicated MetricValue\ninstances, the entire request is rejected with\nan invalid argument error.\n\nThis field is mutually exclusive with method_name.",
+                            "items": {
+                                "description": "Represents a set of metric values in the same metric.\nEach metric value in the set should have a unique combination of start time,\nend time, and label values.",
+                                "properties": {
+                                    "metricName": {
+                                        "description": "The metric name defined in the service configuration.",
+                                        "type": "string"
+                                    },
+                                    "metricValues": {
+                                        "description": "The values in this metric.",
+                                        "items": {
+                                            "description": "Represents a single metric value.",
+                                            "properties": {
+                                                "boolValue": {
+                                                    "description": "A boolean value.",
+                                                    "type": "boolean"
+                                                },
+                                                "distributionValue": {
+                                                    "description": "A distribution value.",
+                                                    "properties": {
+                                                        "bucketCounts": {
+                                                            "description": "The number of samples in each histogram bucket. `bucket_counts` are\noptional. If present, they must sum to the `count` value.\n\nThe buckets are defined below in `bucket_option`. There are N buckets.\n`bucket_counts[0]` is the number of samples in the underflow bucket.\n`bucket_counts[1]` to `bucket_counts[N-1]` are the numbers of samples\nin each of the finite buckets. And `bucket_counts[N] is the number\nof samples in the overflow bucket. See the comments of `bucket_option`\nbelow for more details.\n\nAny suffix of trailing zeros may be omitted.",
+                                                            "items": {
+                                                                "format": "int64",
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "count": {
+                                                            "description": "The total number of samples in the distribution. Must be >= 0.",
+                                                            "format": "int64",
+                                                            "type": "string"
+                                                        },
+                                                        "explicitBuckets": {
+                                                            "description": "Buckets with arbitrary user-provided width.",
+                                                            "properties": {
+                                                                "bounds": {
+                                                                    "description": "'bound' is a list of strictly increasing boundaries between\nbuckets. Note that a list of length N-1 defines N buckets because\nof fenceposting. See comments on `bucket_options` for details.\n\nThe i'th finite bucket covers the interval\n  [bound[i-1], bound[i])\nwhere i ranges from 1 to bound_size() - 1. Note that there are no\nfinite buckets at all if 'bound' only contains a single element; in\nthat special case the single bound defines the boundary between the\nunderflow and overflow buckets.\n\nbucket number                   lower bound    upper bound\n i == 0 (underflow)              -inf           bound[i]\n 0 < i < bound_size()            bound[i-1]     bound[i]\n i == bound_size() (overflow)    bound[i-1]     +inf",
+                                                                    "items": {
+                                                                        "format": "double",
+                                                                        "type": "number"
+                                                                    },
+                                                                    "type": "array"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "exponentialBuckets": {
+                                                            "description": "Buckets with exponentially growing width.",
+                                                            "properties": {
+                                                                "growthFactor": {
+                                                                    "description": "The i'th exponential bucket covers the interval\n  [scale * growth_factor^(i-1), scale * growth_factor^i)\nwhere i ranges from 1 to num_finite_buckets inclusive.\nMust be larger than 1.0.",
+                                                                    "format": "double",
+                                                                    "type": "number"
+                                                                },
+                                                                "numFiniteBuckets": {
+                                                                    "description": "The number of finite buckets. With the underflow and overflow buckets,\nthe total number of buckets is `num_finite_buckets` + 2.\nSee comments on `bucket_options` for details.",
+                                                                    "format": "int32",
+                                                                    "type": "integer"
+                                                                },
+                                                                "scale": {
+                                                                    "description": "The i'th exponential bucket covers the interval\n  [scale * growth_factor^(i-1), scale * growth_factor^i)\nwhere i ranges from 1 to num_finite_buckets inclusive.\nMust be > 0.",
+                                                                    "format": "double",
+                                                                    "type": "number"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "linearBuckets": {
+                                                            "description": "Buckets with constant width.",
+                                                            "properties": {
+                                                                "numFiniteBuckets": {
+                                                                    "description": "The number of finite buckets. With the underflow and overflow buckets,\nthe total number of buckets is `num_finite_buckets` + 2.\nSee comments on `bucket_options` for details.",
+                                                                    "format": "int32",
+                                                                    "type": "integer"
+                                                                },
+                                                                "offset": {
+                                                                    "description": "The i'th linear bucket covers the interval\n  [offset + (i-1) * width, offset + i * width)\nwhere i ranges from 1 to num_finite_buckets, inclusive.",
+                                                                    "format": "double",
+                                                                    "type": "number"
+                                                                },
+                                                                "width": {
+                                                                    "description": "The i'th linear bucket covers the interval\n  [offset + (i-1) * width, offset + i * width)\nwhere i ranges from 1 to num_finite_buckets, inclusive.\nMust be strictly positive.",
+                                                                    "format": "double",
+                                                                    "type": "number"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "maximum": {
+                                                            "description": "The maximum of the population of values. Ignored if `count` is zero.",
+                                                            "format": "double",
+                                                            "type": "number"
+                                                        },
+                                                        "mean": {
+                                                            "description": "The arithmetic mean of the samples in the distribution. If `count` is\nzero then this field must be zero.",
+                                                            "format": "double",
+                                                            "type": "number"
+                                                        },
+                                                        "minimum": {
+                                                            "description": "The minimum of the population of values. Ignored if `count` is zero.",
+                                                            "format": "double",
+                                                            "type": "number"
+                                                        },
+                                                        "sumOfSquaredDeviation": {
+                                                            "description": "The sum of squared deviations from the mean:\n  Sum[i=1..count]((x_i - mean)^2)\nwhere each x_i is a sample values. If `count` is zero then this field\nmust be zero, otherwise validation of the request fails.",
+                                                            "format": "double",
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "doubleValue": {
+                                                    "description": "A double precision floating point value.",
+                                                    "format": "double",
+                                                    "type": "number"
+                                                },
+                                                "endTime": {
+                                                    "description": "The end of the time period over which this metric value's measurement\napplies.",
+                                                    "format": "google-datetime",
+                                                    "type": "string"
+                                                },
+                                                "int64Value": {
+                                                    "description": "A signed 64-bit integer value.",
+                                                    "format": "int64",
+                                                    "type": "string"
+                                                },
+                                                "labels": {
+                                                    "additionalProperties": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": "The labels describing the metric value.\nSee comments on google.api.servicecontrol.v1.Operation.labels for\nthe overriding relationship.",
+                                                    "type": "object"
+                                                },
+                                                "moneyValue": {
+                                                    "description": "A money value.",
+                                                    "properties": {
+                                                        "currencyCode": {
+                                                            "description": "The 3-letter currency code defined in ISO 4217.",
+                                                            "type": "string"
+                                                        },
+                                                        "nanos": {
+                                                            "description": "Number of nano (10^-9) units of the amount.\nThe value must be between -999,999,999 and +999,999,999 inclusive.\nIf `units` is positive, `nanos` must be positive or zero.\nIf `units` is zero, `nanos` can be positive, zero, or negative.\nIf `units` is negative, `nanos` must be negative or zero.\nFor example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.",
+                                                            "format": "int32",
+                                                            "type": "integer"
+                                                        },
+                                                        "units": {
+                                                            "description": "The whole units of the amount.\nFor example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar.",
+                                                            "format": "int64",
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "startTime": {
+                                                    "description": "The start of the time period over which this metric value's measurement\napplies. The time period has different semantics for different metric\ntypes (cumulative, delta, and gauge). See the metric definition\ndocumentation in the service configuration for details.",
+                                                    "format": "google-datetime",
+                                                    "type": "string"
+                                                },
+                                                "stringValue": {
+                                                    "description": "A text string value.",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "quotaMode": {
+                            "description": "Quota mode for this operation.",
+                            "enum": [
+                                "UNSPECIFIED",
+                                "NORMAL",
+                                "BEST_EFFORT",
+                                "CHECK_ONLY"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "serviceConfigId": {
+                    "description": "Specifies which version of service configuration should be used to process\nthe request. If unspecified or no matching version can be found, the latest\none will be used.",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    }
+}

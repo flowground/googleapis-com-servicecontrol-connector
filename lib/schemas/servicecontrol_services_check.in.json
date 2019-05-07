@@ -1,0 +1,491 @@
+{
+    "type": "object",
+    "properties": {
+        "serviceName": {
+            "required": true,
+            "type": "string"
+        },
+        "access_token": {
+            "type": "string"
+        },
+        "alt": {
+            "type": "string",
+            "enum": [
+                "json",
+                "media",
+                "proto"
+            ],
+            "default": "json"
+        },
+        "callback": {
+            "type": "string"
+        },
+        "fields": {
+            "type": "string"
+        },
+        "key": {
+            "type": "string"
+        },
+        "oauth_token": {
+            "type": "string"
+        },
+        "prettyPrint": {
+            "type": "boolean",
+            "default": true
+        },
+        "quotaUser": {
+            "type": "string"
+        },
+        "uploadType": {
+            "type": "string"
+        },
+        "upload_protocol": {
+            "type": "string"
+        },
+        "requestBody": {
+            "description": "Request message for the Check method.",
+            "properties": {
+                "operation": {
+                    "description": "The operation to be checked.",
+                    "properties": {
+                        "consumerId": {
+                            "description": "Identity of the consumer who is using the service.\nThis field should be filled in for the operations initiated by a\nconsumer, but not for service-initiated operations that are\nnot related to a specific consumer.\n\n- This can be in one of the following formats:\n    - project:PROJECT_ID,\n    - project`_`number:PROJECT_NUMBER,\n    - projects/RPOJECT_ID or PROJECT_NUMBER,\n    - folders/FOLDER_NUMBER,\n    - organizations/ORGANIZATION_NUMBER,\n    - api`_`key:API_KEY.",
+                            "type": "string"
+                        },
+                        "endTime": {
+                            "description": "End time of the operation.\nRequired when the operation is used in ServiceController.Report,\nbut optional when the operation is used in ServiceController.Check.",
+                            "format": "google-datetime",
+                            "type": "string"
+                        },
+                        "importance": {
+                            "description": "DO NOT USE. This is an experimental field.",
+                            "enum": [
+                                "LOW",
+                                "HIGH",
+                                "DEBUG"
+                            ],
+                            "type": "string"
+                        },
+                        "labels": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "Labels describing the operation. Only the following labels are allowed:\n\n- Labels describing monitored resources as defined in\n  the service configuration.\n- Default labels of metric values. When specified, labels defined in the\n  metric value override these default.\n- The following labels defined by Google Cloud Platform:\n    - `cloud.googleapis.com/location` describing the location where the\n       operation happened,\n    - `servicecontrol.googleapis.com/user_agent` describing the user agent\n       of the API request,\n    - `servicecontrol.googleapis.com/service_agent` describing the service\n       used to handle the API request (e.g. ESP),\n    - `servicecontrol.googleapis.com/platform` describing the platform\n       where the API is served, such as App Engine, Compute Engine, or\n       Kubernetes Engine.",
+                            "type": "object"
+                        },
+                        "logEntries": {
+                            "description": "Represents information to be logged.",
+                            "items": {
+                                "description": "An individual log entry.",
+                                "properties": {
+                                    "httpRequest": {
+                                        "description": "Optional. Information about the HTTP request associated with this\nlog entry, if applicable.",
+                                        "properties": {
+                                            "cacheFillBytes": {
+                                                "description": "The number of HTTP response bytes inserted into cache. Set only when a\ncache fill was attempted.",
+                                                "format": "int64",
+                                                "type": "string"
+                                            },
+                                            "cacheHit": {
+                                                "description": "Whether or not an entity was served from cache\n(with or without validation).",
+                                                "type": "boolean"
+                                            },
+                                            "cacheLookup": {
+                                                "description": "Whether or not a cache lookup was attempted.",
+                                                "type": "boolean"
+                                            },
+                                            "cacheValidatedWithOriginServer": {
+                                                "description": "Whether or not the response was validated with the origin server before\nbeing served from cache. This field is only meaningful if `cache_hit` is\nTrue.",
+                                                "type": "boolean"
+                                            },
+                                            "latency": {
+                                                "description": "The request processing latency on the server, from the time the request was\nreceived until the response was sent.",
+                                                "format": "google-duration",
+                                                "type": "string"
+                                            },
+                                            "protocol": {
+                                                "description": "Protocol used for the request. Examples: \"HTTP/1.1\", \"HTTP/2\", \"websocket\"",
+                                                "type": "string"
+                                            },
+                                            "referer": {
+                                                "description": "The referer URL of the request, as defined in\n[HTTP/1.1 Header Field\nDefinitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).",
+                                                "type": "string"
+                                            },
+                                            "remoteIp": {
+                                                "description": "The IP address (IPv4 or IPv6) of the client that issued the HTTP\nrequest. Examples: `\"192.168.1.1\"`, `\"FE80::0202:B3FF:FE1E:8329\"`.",
+                                                "type": "string"
+                                            },
+                                            "requestMethod": {
+                                                "description": "The request method. Examples: `\"GET\"`, `\"HEAD\"`, `\"PUT\"`, `\"POST\"`.",
+                                                "type": "string"
+                                            },
+                                            "requestSize": {
+                                                "description": "The size of the HTTP request message in bytes, including the request\nheaders and the request body.",
+                                                "format": "int64",
+                                                "type": "string"
+                                            },
+                                            "requestUrl": {
+                                                "description": "The scheme (http, https), the host name, the path, and the query\nportion of the URL that was requested.\nExample: `\"http://example.com/some/info?color=red\"`.",
+                                                "type": "string"
+                                            },
+                                            "responseSize": {
+                                                "description": "The size of the HTTP response message sent back to the client, in bytes,\nincluding the response headers and the response body.",
+                                                "format": "int64",
+                                                "type": "string"
+                                            },
+                                            "serverIp": {
+                                                "description": "The IP address (IPv4 or IPv6) of the origin server that the request was\nsent to.",
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "description": "The response code indicating the status of the response.\nExamples: 200, 404.",
+                                                "format": "int32",
+                                                "type": "integer"
+                                            },
+                                            "userAgent": {
+                                                "description": "The user agent sent by the client. Example:\n`\"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET\nCLR 1.0.3705)\"`.",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "insertId": {
+                                        "description": "A unique ID for the log entry used for deduplication. If omitted,\nthe implementation will generate one based on operation_id.",
+                                        "type": "string"
+                                    },
+                                    "labels": {
+                                        "additionalProperties": {
+                                            "type": "string"
+                                        },
+                                        "description": "A set of user-defined (key, value) data that provides additional\ninformation about the log entry.",
+                                        "type": "object"
+                                    },
+                                    "name": {
+                                        "description": "Required. The log to which this log entry belongs. Examples: `\"syslog\"`,\n`\"book_log\"`.",
+                                        "type": "string"
+                                    },
+                                    "operation": {
+                                        "description": "Optional. Information about an operation associated with the log entry, if\napplicable.",
+                                        "properties": {
+                                            "first": {
+                                                "description": "Optional. Set this to True if this is the first log entry in the operation.",
+                                                "type": "boolean"
+                                            },
+                                            "id": {
+                                                "description": "Optional. An arbitrary operation identifier. Log entries with the\nsame identifier are assumed to be part of the same operation.",
+                                                "type": "string"
+                                            },
+                                            "last": {
+                                                "description": "Optional. Set this to True if this is the last log entry in the operation.",
+                                                "type": "boolean"
+                                            },
+                                            "producer": {
+                                                "description": "Optional. An arbitrary producer identifier. The combination of\n`id` and `producer` must be globally unique.  Examples for `producer`:\n`\"MyDivision.MyBigCompany.com\"`, `\"github.com/MyProject/MyApplication\"`.",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "protoPayload": {
+                                        "additionalProperties": {
+                                            "description": "Properties of the object. Contains field @type with type URL."
+                                        },
+                                        "description": "The log entry payload, represented as a protocol buffer that is\nexpressed as a JSON object. The only accepted type currently is\nAuditLog.",
+                                        "type": "object"
+                                    },
+                                    "severity": {
+                                        "description": "The severity of the log entry. The default value is\n`LogSeverity.DEFAULT`.",
+                                        "enum": [
+                                            "DEFAULT",
+                                            "DEBUG",
+                                            "INFO",
+                                            "NOTICE",
+                                            "WARNING",
+                                            "ERROR",
+                                            "CRITICAL",
+                                            "ALERT",
+                                            "EMERGENCY"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "structPayload": {
+                                        "additionalProperties": {
+                                            "description": "Properties of the object."
+                                        },
+                                        "description": "The log entry payload, represented as a structure that\nis expressed as a JSON object.",
+                                        "type": "object"
+                                    },
+                                    "textPayload": {
+                                        "description": "The log entry payload, represented as a Unicode string (UTF-8).",
+                                        "type": "string"
+                                    },
+                                    "timestamp": {
+                                        "description": "The time the event described by the log entry occurred. If\nomitted, defaults to operation start time.",
+                                        "format": "google-datetime",
+                                        "type": "string"
+                                    },
+                                    "trace": {
+                                        "description": "Optional. Resource name of the trace associated with the log entry, if any.\nIf this field contains a relative resource name, you can assume the name is\nrelative to `//tracing.googleapis.com`. Example:\n`projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824`",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "metricValueSets": {
+                            "description": "Represents information about this operation. Each MetricValueSet\ncorresponds to a metric defined in the service configuration.\nThe data type used in the MetricValueSet must agree with\nthe data type specified in the metric definition.\n\nWithin a single operation, it is not allowed to have more than one\nMetricValue instances that have the same metric names and identical\nlabel value combinations. If a request has such duplicated MetricValue\ninstances, the entire request is rejected with\nan invalid argument error.",
+                            "items": {
+                                "description": "Represents a set of metric values in the same metric.\nEach metric value in the set should have a unique combination of start time,\nend time, and label values.",
+                                "properties": {
+                                    "metricName": {
+                                        "description": "The metric name defined in the service configuration.",
+                                        "type": "string"
+                                    },
+                                    "metricValues": {
+                                        "description": "The values in this metric.",
+                                        "items": {
+                                            "description": "Represents a single metric value.",
+                                            "properties": {
+                                                "boolValue": {
+                                                    "description": "A boolean value.",
+                                                    "type": "boolean"
+                                                },
+                                                "distributionValue": {
+                                                    "description": "A distribution value.",
+                                                    "properties": {
+                                                        "bucketCounts": {
+                                                            "description": "The number of samples in each histogram bucket. `bucket_counts` are\noptional. If present, they must sum to the `count` value.\n\nThe buckets are defined below in `bucket_option`. There are N buckets.\n`bucket_counts[0]` is the number of samples in the underflow bucket.\n`bucket_counts[1]` to `bucket_counts[N-1]` are the numbers of samples\nin each of the finite buckets. And `bucket_counts[N] is the number\nof samples in the overflow bucket. See the comments of `bucket_option`\nbelow for more details.\n\nAny suffix of trailing zeros may be omitted.",
+                                                            "items": {
+                                                                "format": "int64",
+                                                                "type": "string"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        "count": {
+                                                            "description": "The total number of samples in the distribution. Must be >= 0.",
+                                                            "format": "int64",
+                                                            "type": "string"
+                                                        },
+                                                        "explicitBuckets": {
+                                                            "description": "Buckets with arbitrary user-provided width.",
+                                                            "properties": {
+                                                                "bounds": {
+                                                                    "description": "'bound' is a list of strictly increasing boundaries between\nbuckets. Note that a list of length N-1 defines N buckets because\nof fenceposting. See comments on `bucket_options` for details.\n\nThe i'th finite bucket covers the interval\n  [bound[i-1], bound[i])\nwhere i ranges from 1 to bound_size() - 1. Note that there are no\nfinite buckets at all if 'bound' only contains a single element; in\nthat special case the single bound defines the boundary between the\nunderflow and overflow buckets.\n\nbucket number                   lower bound    upper bound\n i == 0 (underflow)              -inf           bound[i]\n 0 < i < bound_size()            bound[i-1]     bound[i]\n i == bound_size() (overflow)    bound[i-1]     +inf",
+                                                                    "items": {
+                                                                        "format": "double",
+                                                                        "type": "number"
+                                                                    },
+                                                                    "type": "array"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "exponentialBuckets": {
+                                                            "description": "Buckets with exponentially growing width.",
+                                                            "properties": {
+                                                                "growthFactor": {
+                                                                    "description": "The i'th exponential bucket covers the interval\n  [scale * growth_factor^(i-1), scale * growth_factor^i)\nwhere i ranges from 1 to num_finite_buckets inclusive.\nMust be larger than 1.0.",
+                                                                    "format": "double",
+                                                                    "type": "number"
+                                                                },
+                                                                "numFiniteBuckets": {
+                                                                    "description": "The number of finite buckets. With the underflow and overflow buckets,\nthe total number of buckets is `num_finite_buckets` + 2.\nSee comments on `bucket_options` for details.",
+                                                                    "format": "int32",
+                                                                    "type": "integer"
+                                                                },
+                                                                "scale": {
+                                                                    "description": "The i'th exponential bucket covers the interval\n  [scale * growth_factor^(i-1), scale * growth_factor^i)\nwhere i ranges from 1 to num_finite_buckets inclusive.\nMust be > 0.",
+                                                                    "format": "double",
+                                                                    "type": "number"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "linearBuckets": {
+                                                            "description": "Buckets with constant width.",
+                                                            "properties": {
+                                                                "numFiniteBuckets": {
+                                                                    "description": "The number of finite buckets. With the underflow and overflow buckets,\nthe total number of buckets is `num_finite_buckets` + 2.\nSee comments on `bucket_options` for details.",
+                                                                    "format": "int32",
+                                                                    "type": "integer"
+                                                                },
+                                                                "offset": {
+                                                                    "description": "The i'th linear bucket covers the interval\n  [offset + (i-1) * width, offset + i * width)\nwhere i ranges from 1 to num_finite_buckets, inclusive.",
+                                                                    "format": "double",
+                                                                    "type": "number"
+                                                                },
+                                                                "width": {
+                                                                    "description": "The i'th linear bucket covers the interval\n  [offset + (i-1) * width, offset + i * width)\nwhere i ranges from 1 to num_finite_buckets, inclusive.\nMust be strictly positive.",
+                                                                    "format": "double",
+                                                                    "type": "number"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "maximum": {
+                                                            "description": "The maximum of the population of values. Ignored if `count` is zero.",
+                                                            "format": "double",
+                                                            "type": "number"
+                                                        },
+                                                        "mean": {
+                                                            "description": "The arithmetic mean of the samples in the distribution. If `count` is\nzero then this field must be zero.",
+                                                            "format": "double",
+                                                            "type": "number"
+                                                        },
+                                                        "minimum": {
+                                                            "description": "The minimum of the population of values. Ignored if `count` is zero.",
+                                                            "format": "double",
+                                                            "type": "number"
+                                                        },
+                                                        "sumOfSquaredDeviation": {
+                                                            "description": "The sum of squared deviations from the mean:\n  Sum[i=1..count]((x_i - mean)^2)\nwhere each x_i is a sample values. If `count` is zero then this field\nmust be zero, otherwise validation of the request fails.",
+                                                            "format": "double",
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "doubleValue": {
+                                                    "description": "A double precision floating point value.",
+                                                    "format": "double",
+                                                    "type": "number"
+                                                },
+                                                "endTime": {
+                                                    "description": "The end of the time period over which this metric value's measurement\napplies.",
+                                                    "format": "google-datetime",
+                                                    "type": "string"
+                                                },
+                                                "int64Value": {
+                                                    "description": "A signed 64-bit integer value.",
+                                                    "format": "int64",
+                                                    "type": "string"
+                                                },
+                                                "labels": {
+                                                    "additionalProperties": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": "The labels describing the metric value.\nSee comments on google.api.servicecontrol.v1.Operation.labels for\nthe overriding relationship.",
+                                                    "type": "object"
+                                                },
+                                                "moneyValue": {
+                                                    "description": "A money value.",
+                                                    "properties": {
+                                                        "currencyCode": {
+                                                            "description": "The 3-letter currency code defined in ISO 4217.",
+                                                            "type": "string"
+                                                        },
+                                                        "nanos": {
+                                                            "description": "Number of nano (10^-9) units of the amount.\nThe value must be between -999,999,999 and +999,999,999 inclusive.\nIf `units` is positive, `nanos` must be positive or zero.\nIf `units` is zero, `nanos` can be positive, zero, or negative.\nIf `units` is negative, `nanos` must be negative or zero.\nFor example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.",
+                                                            "format": "int32",
+                                                            "type": "integer"
+                                                        },
+                                                        "units": {
+                                                            "description": "The whole units of the amount.\nFor example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar.",
+                                                            "format": "int64",
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "startTime": {
+                                                    "description": "The start of the time period over which this metric value's measurement\napplies. The time period has different semantics for different metric\ntypes (cumulative, delta, and gauge). See the metric definition\ndocumentation in the service configuration for details.",
+                                                    "format": "google-datetime",
+                                                    "type": "string"
+                                                },
+                                                "stringValue": {
+                                                    "description": "A text string value.",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "operationId": {
+                            "description": "Identity of the operation. This must be unique within the scope of the\nservice that generated the operation. If the service calls\nCheck() and Report() on the same operation, the two calls should carry\nthe same id.\n\nUUID version 4 is recommended, though not required.\nIn scenarios where an operation is computed from existing information\nand an idempotent id is desirable for deduplication purpose, UUID version 5\nis recommended. See RFC 4122 for details.",
+                            "type": "string"
+                        },
+                        "operationName": {
+                            "description": "Fully qualified name of the operation. Reserved for future use.",
+                            "type": "string"
+                        },
+                        "quotaProperties": {
+                            "description": "Represents the properties needed for quota check. Applicable only if this\noperation is for a quota check request. If this is not specified, no quota\ncheck will be performed.",
+                            "properties": {
+                                "quotaMode": {
+                                    "description": "Quota mode for this operation.",
+                                    "enum": [
+                                        "ACQUIRE",
+                                        "ACQUIRE_BEST_EFFORT",
+                                        "CHECK",
+                                        "RELEASE"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "resourceContainer": {
+                            "description": "DO NOT USE. This field is deprecated, use \"resources\" field instead.\nThe resource name of the parent of a resource in the resource hierarchy.\n\nThis can be in one of the following formats:\n    - “projects/<project-id or project-number>”\n    - “folders/<folder-id>”\n    - “organizations/<organization-id>”",
+                            "type": "string"
+                        },
+                        "resources": {
+                            "description": "The resources that are involved in the operation.\nThe maximum supported number of entries in this field is 100.",
+                            "items": {
+                                "description": "Describes a resource associated with this operation.",
+                                "properties": {
+                                    "resourceContainer": {
+                                        "description": "The identifier of the parent of this resource instance.\nMust be in one of the following formats:\n    - “projects/<project-id or project-number>”\n    - “folders/<folder-id>”\n    - “organizations/<organization-id>”",
+                                        "type": "string"
+                                    },
+                                    "resourceLocation": {
+                                        "description": "The location of the resource. If not empty, the resource will be checked\nagainst location policy. The value must be a valid zone, region or\nmultiregion. For example: \"europe-west4\" or \"northamerica-northeast1-a\"",
+                                        "type": "string"
+                                    },
+                                    "resourceName": {
+                                        "description": "Name of the resource. This is used for auditing purposes.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "startTime": {
+                            "description": "Required. Start time of the operation.",
+                            "format": "google-datetime",
+                            "type": "string"
+                        },
+                        "userLabels": {
+                            "additionalProperties": {
+                                "type": "string"
+                            },
+                            "description": "User defined labels for the resource that this operation is associated\nwith. Only a combination of 1000 user labels per consumer project are\nallowed.",
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "requestProjectSettings": {
+                    "description": "Requests the project settings to be returned as part of the check response.",
+                    "type": "boolean"
+                },
+                "serviceConfigId": {
+                    "description": "Specifies which version of service configuration should be used to process\nthe request.\n\nIf unspecified or no matching version can be found, the\nlatest one will be used.",
+                    "type": "string"
+                },
+                "skipActivationCheck": {
+                    "description": "Indicates if service activation check should be skipped for this request.\nDefault behavior is to perform the check and apply relevant quota.\nWARNING: Setting this flag to \"true\" will disable quota enforcement.",
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        }
+    }
+}
